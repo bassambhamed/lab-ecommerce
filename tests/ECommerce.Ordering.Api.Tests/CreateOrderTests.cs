@@ -74,6 +74,15 @@ public sealed class CreateOrderTests : IDisposable
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
+    // Scenario 9: bug reported by the customer (500 instead of 400 when "items" is absent).
+    [Fact]
+    public async Task CreateOrder_MissingItemsProperty_Returns400()
+    {
+        var response = await PostOrderAsync("""{"customer":"Ada"}""");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
     // The exact JSON a client sends: the only way to test absent or mistyped properties.
     private Task<HttpResponseMessage> PostOrderAsync(string json) =>
         _client.PostAsync("/api/orders", new StringContent(json, Encoding.UTF8, "application/json"));
