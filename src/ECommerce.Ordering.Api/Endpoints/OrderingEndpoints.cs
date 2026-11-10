@@ -27,14 +27,14 @@ public static class OrderingEndpoints
             CatalogServiceClient catalog,
             CancellationToken ct) =>
         {
-            if (request.Items.Count == 0)
+            if (Validate(request) is { } error)
             {
-                return Results.BadRequest("An order must contain at least one item.");
+                return Results.BadRequest(error);
             }
 
             var order = new Order
             {
-                Customer = request.Customer,
+                Customer = request.Customer.Trim(),
                 CreatedAt = DateTimeOffset.UtcNow,
                 Status = OrderStatus.Pending
             };
@@ -66,6 +66,44 @@ public static class OrderingEndpoints
         .WithName("CreateOrder");
 
         return group;
+    }
+
+    // Must stay in sync with the Customer column length in OrderingDbContext
+    // (not enforced by the in-memory provider).
+    private const int CustomerMaxLength = 200;
+
+    /// <summary>
+    /// Validates the request before any call to Catalog. Returns an error message, or null if valid.
+    /// </summary>
+    private static string? Validate(CreateOrderRequest request)
+    {
+        // Fields can be null when absent from the JSON body, despite the non-nullable declarations.
+        if (string.IsNullOrWhiteSpace(request.Customer))
+        {
+            return "Customer is required.";
+        }
+
+        if (request.Customer.Trim().Length > CustomerMaxLength)
+        {
+            return $"Customer must be at most {CustomerMaxLength} characters.";
+        }
+
+        if (request.Items is null || request.Items.Count == 0)
+        {
+            return "An order must contain at least one item.";
+        }
+
+        if (request.Items.Any(i => i is null))
+        {
+            return "Order items must not be null.";
+        }
+
+        if (request.Items.FirstOrDefault(i => i.Quantity <= 0) is { } invalid)
+        {
+            return $"Quantity for product {invalid.ProductId} must be greater than zero.";
+        }
+
+        return null;
     }
 }
 
