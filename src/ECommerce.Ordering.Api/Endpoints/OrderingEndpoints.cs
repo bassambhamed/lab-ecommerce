@@ -11,6 +11,8 @@ public static class OrderingEndpoints
     {
         var group = routes.MapGroup("/api/orders").WithTags("Ordering");
 
+        // Issued promo codes are deliberately not loaded here: they are bearer codes and these
+        // endpoints are public. Only the POST response hands a code to the customer who ordered.
         group.MapGet("/", async (OrderingDbContext db) =>
             await db.Orders.AsNoTracking().Include(o => o.Items).ToListAsync())
             .WithName("GetOrders");
@@ -25,6 +27,8 @@ public static class OrderingEndpoints
             CreateOrderRequest request,
             OrderingDbContext db,
             CatalogServiceClient catalog,
+            PromoCodeService promoCodes,
+            TimeProvider time,
             CancellationToken ct) =>
         {
             if (Validate(request) is { } error)
@@ -32,10 +36,21 @@ public static class OrderingEndpoints
                 return Results.BadRequest(error);
             }
 
+            // Check the promo code before calling Catalog: it only needs the local database.
+            PromoCode? promo = null;
+            if (!string.IsNullOrWhiteSpace(request.PromoCode))
+            {
+                (promo, var promoError) = await promoCodes.FindRedeemableAsync(request.PromoCode, ct);
+                if (promoError is not null)
+                {
+                    return Results.BadRequest(promoError);
+                }
+            }
+
             var order = new Order
             {
                 Customer = request.Customer.Trim(),
-                CreatedAt = DateTimeOffset.UtcNow,
+                CreatedAt = time.GetUtcNow(),
                 Status = OrderStatus.Pending
             };
 
@@ -57,9 +72,24 @@ public static class OrderingEndpoints
                 });
             }
 
+            if (promo is not null)
+            {
+                promoCodes.Redeem(promo, order);
+            }
+
             order.Status = OrderStatus.Confirmed;
+            order.IssuedPromoCode = await promoCodes.IssueAsync(ct);
             db.Orders.Add(order);
-            await db.SaveChangesAsync(ct);
+
+            try
+            {
+                await db.SaveChangesAsync(ct);
+            }
+            catch (DbUpdateConcurrencyException) when (promo is not null)
+            {
+                // Another order redeemed the same code between our check and this save.
+                return Results.BadRequest($"Promo code {promo.Code} has already been used.");
+            }
 
             return Results.CreatedAtRoute("GetOrderById", new { id = order.Id }, order);
         })
@@ -88,6 +118,11 @@ public static class OrderingEndpoints
             return $"Customer must be at most {CustomerMaxLength} characters.";
         }
 
+        if (request.PromoCode is { } code && code.Trim().Length > OrderingDbContext.PromoCodeMaxLength)
+        {
+            return $"Promo code must be at most {OrderingDbContext.PromoCodeMaxLength} characters.";
+        }
+
         if (request.Items is null || request.Items.Count == 0)
         {
             return "An order must contain at least one item.";
@@ -107,5 +142,5 @@ public static class OrderingEndpoints
     }
 }
 
-public record CreateOrderRequest(string Customer, List<OrderLine> Items);
+public record CreateOrderRequest(string Customer, List<OrderLine> Items, string? PromoCode = null);
 public record OrderLine(int ProductId, int Quantity);

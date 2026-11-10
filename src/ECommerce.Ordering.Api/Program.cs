@@ -12,6 +12,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<OrderingDbContext>(options =>
     options.UseInMemoryDatabase("ordering"));
 
+// Promo codes: one issued per confirmed order, redeemable once on a later order.
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddOptions<PromoCodeOptions>()
+    .BindConfiguration(PromoCodeOptions.SectionName)
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+builder.Services.AddScoped<PromoCodeService>();
+
 // Serialize enums (e.g. OrderStatus) as strings rather than integers.
 builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
