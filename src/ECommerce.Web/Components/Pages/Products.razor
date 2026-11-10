@@ -58,12 +58,36 @@ else
             <label class="form-label">Customer name</label>
             <input class="form-control" style="max-width: 320px" @bind="_customer" />
         </div>
+        <div class="mb-2">
+            <label class="form-label">Promo code (optional)</label>
+            <input class="form-control" style="max-width: 320px" placeholder="PROMO-XXXXXXXX" @bind="_promoCode" />
+        </div>
         <button class="btn btn-primary" @onclick="PlaceOrder" disabled="@_placing">Place order</button>
     }
 
     @if (!string.IsNullOrEmpty(_message))
     {
-        <div class="alert @(_isError ? "alert-danger" : "alert-success") mt-3">@_message</div>
+        <div class="alert @(_isError ? "alert-danger" : "alert-success") mt-3">
+            @_message
+            @if (_lastOrder is { } o)
+            {
+                @if (o.DiscountAmount > 0)
+                {
+                    <div>Subtotal @o.Subtotal.ToString("C") − discount @o.DiscountAmount.ToString("C") (@o.AppliedPromoCode) = <strong>@o.Total.ToString("C")</strong></div>
+                }
+                else
+                {
+                    <div>Total: <strong>@o.Total.ToString("C")</strong></div>
+                }
+                @if (o.IssuedPromoCode is { } promo)
+                {
+                    <div class="mt-2">
+                        Your promo code: <strong>@promo.Code</strong> — @promo.DiscountPercent% off your next order,
+                        valid until @promo.ExpiresAt.LocalDateTime.ToString("d").
+                    </div>
+                }
+            }
+        </div>
     }
 }
 
@@ -71,6 +95,8 @@ else
     private IReadOnlyList<ProductDto>? _products;
     private readonly Dictionary<ProductDto, int> _cart = new();
     private string _customer = "";
+    private string _promoCode = "";
+    private OrderDto? _lastOrder;
     private bool _placing;
     private string? _message;
     private bool _isError;
@@ -84,6 +110,7 @@ else
     {
         _cart[product] = _cart.TryGetValue(product, out var qty) ? qty + 1 : 1;
         _message = null;
+        _lastOrder = null;
     }
 
     private async Task PlaceOrder()
@@ -92,23 +119,27 @@ else
         {
             _message = "Please enter a customer name.";
             _isError = true;
+            _lastOrder = null;
             return;
         }
 
         _placing = true;
         var order = new CreateOrderDto(
             _customer,
-            _cart.Select(c => new OrderLineDto(c.Key.Id, c.Value)).ToList());
+            _cart.Select(c => new OrderLineDto(c.Key.Id, c.Value)).ToList(),
+            string.IsNullOrWhiteSpace(_promoCode) ? null : _promoCode);
 
-        var (success, error) = await Ordering.CreateOrderAsync(order);
+        var (created, error) = await Ordering.CreateOrderAsync(order);
         _placing = false;
+        _lastOrder = created;
 
-        if (success)
+        if (created is not null)
         {
             _message = "Order placed successfully!";
             _isError = false;
             _cart.Clear();
             _customer = "";
+            _promoCode = "";
         }
         else
         {

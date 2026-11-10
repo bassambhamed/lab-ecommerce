@@ -8,7 +8,17 @@ public class Order
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
     public List<OrderItem> Items { get; set; } = [];
 
-    public decimal Total => Items.Sum(i => i.UnitPrice * i.Quantity);
+    /// <summary>Promo code redeemed on this order, if any.</summary>
+    public string? AppliedPromoCode { get; set; }
+
+    /// <summary>Amount taken off the subtotal by <see cref="AppliedPromoCode"/>.</summary>
+    public decimal DiscountAmount { get; set; }
+
+    /// <summary>Promo code issued to the customer when this order was confirmed.</summary>
+    public PromoCode? IssuedPromoCode { get; set; }
+
+    public decimal Subtotal => Items.Sum(i => i.UnitPrice * i.Quantity);
+    public decimal Total => Subtotal - DiscountAmount;
 }
 
 public class OrderItem
