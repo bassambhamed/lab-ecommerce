@@ -14,10 +14,31 @@ The SDK (10.0.x) lives in `/usr/local/share/dotnet`. If `dotnet` is not found, p
 - Run the whole system (all services + Aspire dashboard): `dotnet run --project src/ECommerce.AppHost`
   - Open the `Login URL` printed in the terminal; its `?t=<token>` changes on every run. The dashboard ports are fixed by `src/ECommerce.AppHost/Properties/launchSettings.json` (17089 https / 15202 http) and each service has its own `launchSettings.json`, but code must never hard-code service addresses — use service discovery names (see below).
   - HTTPS errors (`UntrustedRoot`): `dotnet dev-certs https --trust`.
-- There are no test projects yet. Once added to the solution: `dotnet test ECommerce.slnx`, single test with `dotnet test --filter "FullyQualifiedName~<TestName>"`.
-- No linter/formatter is configured beyond the compiler (`Nullable` and `ImplicitUsings` enabled everywhere); `dotnet format` is available if needed.
+- There are no test projects yet. Once added to the solution: `dotnet test ECommerce.slnx`, single test with `dotnet test --filter "FullyQualifiedName~<TestName>"`. Until then `dotnet test` "passes" without testing anything — don't report it as proof.
+- Format check: `dotnet format ECommerce.slnx --verify-no-changes --include <files>`. Check only the files you touched: `src/ECommerce.ServiceDefaults/Extensions.cs` already has 7 known format violations.
+- No `.gitattributes`: many files (most `appsettings*.json` and `launchSettings.json`, three `.csproj`, `Extensions.cs`, every Web `.razor` except `Pages/Home`, `Orders` and `Products`) use **CRLF** line endings, the rest LF. Preserve each file's line endings when editing, or the diff covers the whole file.
 
 Running a service alone with `dotnet run --project src/<Service>` starts it, but only Catalog is fully usable that way (no outgoing calls). Ordering, Gateway and Web start too, yet their outgoing calls to `catalog` / `ordering` / `gateway` fail because those addresses are normally injected by the AppHost (see below).
+
+## Verifying a change
+
+- **End to end**: the `/smoke-test` skill (`.claude/skills/smoke-test/smoke.sh`) hits the gateway on its fixed http port `http://localhost:5067` (catalog list, a valid order, an unknown product). If the app is already running it reuses it and leaves it running; otherwise it starts the AppHost and stops it afterwards. A running AppHost does **not** pick up a rebuild: restart it before smoke-testing new code. Every run creates a real order in the in-memory database.
+- **Ordering alone, without touching a running AppHost** (works because Catalog's http endpoint stays on `5147`):
+  ```bash
+  ASPNETCORE_ENVIRONMENT=Development services__catalog__http__0=http://localhost:5147 \
+    dotnet run --no-build --no-launch-profile --project src/ECommerce.Ordering.Api --urls http://localhost:5299
+  ```
+  Then `curl` `http://localhost:5299/api/orders` (no `/ordering` prefix: that is the gateway's), and stop the process afterwards.
+- Service logs don't show in the AppHost console; they are in the Aspire dashboard (console logs, structured logs, traces).
+- `preuves/lab<N>/README.md` holds raw before/after outputs (curl) for each lab.
+
+## Git workflow and project tooling
+
+- Work on a branch (`feat/...`, `fix/...`), never directly on `main`. Commit messages: conventional (`feat:`, `fix:`, `test:`, `docs:`, `chore:`), in English, saying why.
+- Stage files by name: `git add -A` gets blocked by the safety classifier (`.env` exists at the root; it is gitignored and reading it is denied in `.claude/settings.json`).
+- `.claude/settings.json` denies `git push --force`/`-f` and `git reset --hard`, and asks for confirmation on `git push`, `gh pr create` and `gh pr merge`. Never merge a PR: a human decides.
+- `/revue-diff [focus]` (`.claude/commands/revue-diff.md`): read-only critical review of the branch + uncommitted diff, output as a severity table.
+- `/ship <title>` (`.claude/skills/ship/`): refuses on `main`, runs `verifier.sh` (build → tests → format of changed `.cs` files, stops at first failure), reviews, commits, pushes and opens the PR with the `modele-pr.md` template (every section filled with facts).
 
 ## Architecture
 
