@@ -20,7 +20,11 @@ rôles, noms accessibles et textes exactement ceux des critères.
 S'il manque le fichier de critères, arrête-toi et dis-le.
 
 ## Périmètre
-- **Autorisé** : le composant de la page visée (`Components/Pages/<Page>.razor`), son CSS isolé
+- **Si le fichier de critères contient une section « Périmètre »**, elle remplace la liste « Autorisé »
+  ci-dessous : tu ne modifies que les fichiers qu'elle cite, et ses exclusions s'ajoutent aux interdits.
+  `Services/**`, `Program.cs`, les API, `tests/`, `.claude/` et `preuves/` restent interdits dans tous les cas.
+  Si elle impose une non-régression (autre fichier de critères), relis ces critères et préserve-les.
+- **Autorisé** (par défaut) : le composant de la page visée (`Components/Pages/<Page>.razor`), son CSS isolé
   (`<Page>.razor.css`, à créer si besoin) et `src/ECommerce.Web/README.md` (ligne de la page).
 - **Interdit** : les autres pages, `Components/Layout/**`, `Services/**` (clients typés et DTO),
   `Program.cs`, les API (`src/ECommerce.*.Api`), la Gateway, l'AppHost, `tests/`, `.claude/`,
