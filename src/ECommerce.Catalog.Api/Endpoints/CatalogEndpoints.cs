@@ -55,38 +55,50 @@ public static class CatalogEndpoints
     /// <summary>Validates the request before saving. Returns an error message, or null if valid.</summary>
     private static string? Validate(CreateProductRequest request)
     {
+        string? error = null;
+
         // Name can be null when absent from the JSON body, despite the non-nullable declaration.
-        if (string.IsNullOrWhiteSpace(request.Name))
+        if (request.Name != null && request.Name.Trim().Length > 0)
         {
-            return "Name is required.";
+            if (!(request.Name.Trim().Length > NameMaxLength))
+            {
+                if (request.Description == null || (request.Description != null && request.Description.Length <= DescriptionMaxLength))
+                {
+                    if (request.Price >= 0 && request.Price < PriceUpperBound)
+                    {
+                        if (decimal.Round(request.Price, PriceScale) == request.Price)
+                        {
+                            if (request.AvailableStock < 0)
+                            {
+                                error = "Available stock must not be negative.";
+                            }
+                        }
+                        else
+                        {
+                            error = $"Price must have at most {PriceScale} decimal places.";
+                        }
+                    }
+                    else
+                    {
+                        error = $"Price must be between 0 and {PriceUpperBound - 0.01m}.";
+                    }
+                }
+                else
+                {
+                    error = $"Description must be at most {DescriptionMaxLength} characters.";
+                }
+            }
+            else
+            {
+                error = $"Name must be at most {NameMaxLength} characters.";
+            }
+        }
+        else
+        {
+            error = "Name is required.";
         }
 
-        if (request.Name.Trim().Length > NameMaxLength)
-        {
-            return $"Name must be at most {NameMaxLength} characters.";
-        }
-
-        if (request.Description is { Length: > DescriptionMaxLength })
-        {
-            return $"Description must be at most {DescriptionMaxLength} characters.";
-        }
-
-        if (request.Price < 0 || request.Price >= PriceUpperBound)
-        {
-            return $"Price must be between 0 and {PriceUpperBound - 0.01m}.";
-        }
-
-        if (decimal.Round(request.Price, PriceScale) != request.Price)
-        {
-            return $"Price must have at most {PriceScale} decimal places.";
-        }
-
-        if (request.AvailableStock < 0)
-        {
-            return "Available stock must not be negative.";
-        }
-
-        return null;
+        return error;
     }
 }
 
