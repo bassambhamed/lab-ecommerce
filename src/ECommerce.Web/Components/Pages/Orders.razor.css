@@ -1,0 +1,10 @@
+.customer-filter {
+    flex: 0 1 20rem;
+    min-width: 12rem;
+}
+
+.btn:focus-visible,
+.form-control:focus-visible {
+    outline: 2px solid #258cfb;
+    outline-offset: 2px;
+}

@@ -14,7 +14,7 @@ exactly like an external caller, never directly to Catalog or Ordering.
 | `Services/OrderingApiClient.cs` | Typed client → `/ordering/...` via the gateway. Order DTOs. |
 | `Components/Pages/Home.razor` | Landing page with links to Catalog and Orders. |
 | `Components/Pages/Products.razor` | Catalog list + in-memory cart + place-order form. |
-| `Components/Pages/Orders.razor` | Order history with a refresh button. |
+| `Components/Pages/Orders.razor` | Order history: client-side "Filter by customer" (case-insensitive, live count in a `status` region, Escape / "Clear filter"), Refresh that cancels the previous request, loading and error states; orders load after the first render so prerendering never waits on Ordering. Isolated styles in `Orders.razor.css`. |
 | `Components/Layout/NavMenu.razor` | Navigation: Catalog / Orders. |
 | `Program.cs` | Registers the two typed clients pointing at `https+http://gateway`. |
 
