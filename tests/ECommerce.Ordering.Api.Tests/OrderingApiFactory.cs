@@ -1,35 +1,29 @@
 using System.Net;
 using System.Net.Http.Json;
-using ECommerce.Ordering.Api.Data;
 using ECommerce.Ordering.Api.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace ECommerce.Ordering.Api.Tests;
 
 /// <summary>
-/// Hosts Ordering.Api in memory with its own database and a fake Catalog: no test reaches the real Catalog.
+/// Hosts Ordering.Api in memory against its own, brand-new PostgreSQL database and a fake Catalog:
+/// no test reaches the real Catalog. Migrate() in Program.cs creates the database.
 /// </summary>
 public sealed class OrderingApiFactory : WebApplicationFactory<Program>
 {
-    private readonly string _databaseName = $"ordering-tests-{Guid.NewGuid()}";
+    private readonly string _connectionString = PostgresServer.NewDatabaseConnectionString("ordering_tests");
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        // Aspire normally injects this setting. The fake handler answers instead of the network.
+        // Aspire normally injects these settings. The fake handler answers instead of the network.
+        builder.UseSetting("ConnectionStrings:orderingdb", _connectionString);
         builder.UseSetting("services:catalog:http:0", "http://catalog.test");
 
         builder.ConfigureTestServices(services =>
         {
-            services.RemoveAll<DbContextOptions<OrderingDbContext>>();
-            services.RemoveAll<IDbContextOptionsConfiguration<OrderingDbContext>>();
-            services.AddDbContext<OrderingDbContext>(options => options.UseInMemoryDatabase(_databaseName));
-
             services.AddHttpClient<CatalogServiceClient>()
                 .ConfigurePrimaryHttpMessageHandler(() => new FakeCatalogHandler());
         });
