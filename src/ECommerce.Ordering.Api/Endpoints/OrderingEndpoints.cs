@@ -78,55 +78,32 @@ public static class OrderingEndpoints
     private static string? Validate(CreateOrderRequest request)
     {
         // Fields can be null when absent from the JSON body, despite the non-nullable declarations.
-        if (request.Customer != null && request.Customer.Trim().Length > 0 && !(request.Customer.Trim().Length > CustomerMaxLength))
+        if (string.IsNullOrWhiteSpace(request.Customer))
         {
-            if (request.Items != null && request.Items.Count > 0)
-            {
-                bool hasNull = false;
-                foreach (var item in request.Items)
-                {
-                    if (item == null)
-                    {
-                        hasNull = true;
-                    }
-                }
-
-                if (!hasNull)
-                {
-                    foreach (var item in request.Items)
-                    {
-                        if (item != null)
-                        {
-                            if (item.Quantity <= 0)
-                            {
-                                return $"Quantity for product {item.ProductId} must be greater than zero.";
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    return "Order items must not be null.";
-                }
-
-                return null;
-            }
-            else
-            {
-                return "An order must contain at least one item.";
-            }
+            return "Customer is required.";
         }
-        else
+
+        if (request.Customer.Trim().Length > CustomerMaxLength)
         {
-            if (request.Customer == null || request.Customer.Trim().Length == 0)
-            {
-                return "Customer is required.";
-            }
-            else
-            {
-                return $"Customer must be at most {CustomerMaxLength} characters.";
-            }
+            return $"Customer must be at most {CustomerMaxLength} characters.";
         }
+
+        if (request.Items is null || request.Items.Count == 0)
+        {
+            return "An order must contain at least one item.";
+        }
+
+        if (request.Items.Any(i => i is null))
+        {
+            return "Order items must not be null.";
+        }
+
+        if (request.Items.FirstOrDefault(i => i.Quantity <= 0) is { } invalid)
+        {
+            return $"Quantity for product {invalid.ProductId} must be greater than zero.";
+        }
+
+        return null;
     }
 }
 
