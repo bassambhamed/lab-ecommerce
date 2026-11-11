@@ -14,31 +14,36 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Description</th>
-                <th class="text-end">Price</th>
-                <th class="text-end">Stock</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in _products)
-            {
-                <tr>
-                    <td>@p.Name</td>
-                    <td>@p.Description</td>
-                    <td class="text-end">@p.Price.ToString("C")</td>
-                    <td class="text-end">@p.AvailableStock</td>
-                    <td class="text-end">
-                        <button class="btn btn-sm btn-outline-primary" @onclick="() => AddToCart(p)">Add</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card-grid product-grid">
+        @foreach (var p in _products)
+        {
+            <div class="card product-card">
+                <div class="card-body">
+                    <dl class="product-details">
+                        <div class="product-field">
+                            <dt>Product</dt>
+                            <dd class="product-name">@p.Name</dd>
+                        </div>
+                        <div class="product-field product-description">
+                            <dt>Description</dt>
+                            <dd>@p.Description</dd>
+                        </div>
+                        <div class="product-figures">
+                            <div class="product-field">
+                                <dt>Price</dt>
+                                <dd class="product-price">@p.Price.ToString("C")</dd>
+                            </div>
+                            <div class="product-field text-end">
+                                <dt>Stock</dt>
+                                <dd>@p.AvailableStock</dd>
+                            </div>
+                        </div>
+                    </dl>
+                    <button class="btn btn-sm btn-outline-primary" @onclick="() => AddToCart(p)">Add</button>
+                </div>
+            </div>
+        }
+    </div>
 
     <h2>Cart</h2>
     @if (_cart.Count == 0)

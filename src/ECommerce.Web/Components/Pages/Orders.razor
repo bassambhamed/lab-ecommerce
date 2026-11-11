@@ -60,25 +60,27 @@ else if (FilteredOrders.Count == 0)
 }
 else
 {
-    @foreach (var order in FilteredOrders)
-    {
-        <div class="card mb-3">
-            <div class="card-header d-flex justify-content-between">
-                <span><strong>Order #@order.Id</strong> — @order.Customer</span>
-                <span class="badge bg-info text-dark">@order.Status</span>
+    <div class="card-grid order-grid">
+        @foreach (var order in FilteredOrders)
+        {
+            <div class="card order-card">
+                <div class="card-header d-flex justify-content-between gap-2">
+                    <span><strong>Order #@order.Id</strong> — @order.Customer</span>
+                    <span class="badge status-badge" data-status="@order.Status">@order.Status</span>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Placed @order.CreatedAt.LocalDateTime</p>
+                    <ul>
+                        @foreach (var item in order.Items)
+                        {
+                            <li>@item.Quantity × @item.ProductName @@ @item.UnitPrice.ToString("C")</li>
+                        }
+                    </ul>
+                    <strong>Total: @order.Total.ToString("C")</strong>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="text-muted">Placed @order.CreatedAt.LocalDateTime</p>
-                <ul>
-                    @foreach (var item in order.Items)
-                    {
-                        <li>@item.Quantity × @item.ProductName @@ @item.UnitPrice.ToString("C")</li>
-                    }
-                </ul>
-                <strong>Total: @order.Total.ToString("C")</strong>
-            </div>
-        </div>
-    }
+        }
+    </div>
 }
 
 @code {
