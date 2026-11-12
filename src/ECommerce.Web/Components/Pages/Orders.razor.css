@@ -1,0 +1,26 @@
+.customer-filter {
+    flex: 0 1 20rem;
+    min-width: min(12rem, 100%);
+}
+
+/* The app-wide ring lives in app.css; repeated here so the page keeps it on its own. */
+.btn:focus-visible,
+.form-control:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus);
+    outline-offset: var(--focus-ring-offset);
+}
+
+.order-card .card-header {
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+
+.order-card .card-body ul {
+    padding-left: var(--space-5);
+    margin-bottom: var(--space-3);
+}
+
+.order-card .card-body p {
+    font-size: var(--font-size-small);
+    margin-bottom: var(--space-2);
+}

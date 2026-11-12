@@ -32,7 +32,18 @@
       "Bash(dotnet ef migrations list *)",
       "Bash(dotnet ef migrations script *)",
       "Bash(dotnet ef migrations has-pending-model-changes *)",
-      "Bash(bash *.claude/skills/review-migration/essai-ephemere.sh *)"
+      "Bash(bash *.claude/skills/review-migration/essai-ephemere.sh *)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_tabs",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_close"
     ],
     "deny": [
       "Read(./.env)",
@@ -52,7 +63,11 @@
       "Read(~/.microsoft/usersecrets/**)",
       "Bash(cat *usersecrets*)",
       "Read(./**/appsettings.Production.json)",
-      "Read(~/.config/lab-ecommerce/**)"
+      "Read(~/.config/lab-ecommerce/**)",
+      "mcp__playwright__browser_run_code_unsafe",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_file_upload",
+      "mcp__playwright__browser_drop"
     ],
     "ask": [
       "Bash(git push *)",

@@ -1,0 +1,20 @@
+.lead-text {
+    max-width: 60ch;
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.card-text {
+    flex: 1;
+    color: var(--color-text-muted);
+}
+
+.card-body .btn {
+    align-self: flex-start;
+}

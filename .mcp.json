@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "postgres-catalog": {
+      "command": "bash",
+      "args": [
+        ".claude/mcp/postgres-lecture.sh",
+        "catalogdb"
+      ]
+    },
+    "postgres-ordering": {
+      "command": "bash",
+      "args": [
+        ".claude/mcp/postgres-lecture.sh",
+        "orderingdb"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.84",
+        "--isolated",
+        "--ignore-https-errors",
+        "--output-dir",
+        "${TMPDIR:-/tmp}/playwright-mcp"
+      ]
+    }
+  }
+}

@@ -1,53 +1,202 @@
 @page "/orders"
 @using ECommerce.Web.Services
 @inject OrderingApiClient Ordering
+@inject ILogger<Orders> Logger
 @rendermode InteractiveServer
+@implements IDisposable
 
 <PageTitle>Orders</PageTitle>
 
 <h1>Orders</h1>
 
-<button class="btn btn-sm btn-outline-secondary mb-3" @onclick="Load">Refresh</button>
+<div class="mb-2">
+    <label for="customer-filter" class="form-label mb-1">Filter by customer</label>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <input id="customer-filter"
+               type="search"
+               class="form-control customer-filter"
+               autocomplete="off"
+               @ref="_filterInput"
+               @bind="_filter"
+               @bind:event="oninput"
+               @onkeydown="OnFilterKeyDown" />
+        @if (HasFilter)
+        {
+            <button type="button" class="btn btn-outline-secondary" @onclick="ClearFilter">Clear filter</button>
+        }
+        <button type="button" class="btn btn-outline-secondary ms-auto" @onclick="Load">Refresh</button>
+    </div>
+</div>
 
-@if (_orders is null)
+<p role="status" class="text-muted mb-3">
+    @if (_loading)
+    {
+        <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+        <span>Loading orders…</span>
+    }
+    else if (!_hasError && _orders is not null)
+    {
+        @StatusText
+    }
+</p>
+
+@if (_loading)
 {
-    <p><em>Loading orders…</em></p>
+    @* The loading indicator lives in the status region above, in place of the list. *@
 }
-else if (_orders.Count == 0)
+else if (_hasError)
+{
+    <div class="alert alert-danger" role="alert">
+        Orders could not be loaded right now. Click <strong>Refresh</strong> to try again.
+    </div>
+}
+else if (_orders is null || _orders.Count == 0)
 {
     <p><em>No orders yet. Place one from the <a href="/products">Catalog</a> page.</em></p>
 }
+else if (FilteredOrders.Count == 0)
+{
+    <p class="alert alert-secondary">No orders match “@FilterText”.</p>
+}
 else
 {
-    @foreach (var order in _orders)
-    {
-        <div class="card mb-3">
-            <div class="card-header d-flex justify-content-between">
-                <span><strong>Order #@order.Id</strong> — @order.Customer</span>
-                <span class="badge bg-info text-dark">@order.Status</span>
+    <div class="card-grid order-grid">
+        @foreach (var order in FilteredOrders)
+        {
+            <div class="card order-card">
+                <div class="card-header d-flex justify-content-between gap-2">
+                    <span><strong>Order #@order.Id</strong> — @order.Customer</span>
+                    <span class="badge status-badge" data-status="@order.Status">@order.Status</span>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Placed @order.CreatedAt.LocalDateTime</p>
+                    <ul>
+                        @foreach (var item in order.Items)
+                        {
+                            <li>@item.Quantity × @item.ProductName @@ @item.UnitPrice.ToString("C")</li>
+                        }
+                    </ul>
+                    <strong>Total: @order.Total.ToString("C")</strong>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="text-muted">Placed @order.CreatedAt.LocalDateTime</p>
-                <ul>
-                    @foreach (var item in order.Items)
-                    {
-                        <li>@item.Quantity × @item.ProductName @@ @item.UnitPrice.ToString("C")</li>
-                    }
-                </ul>
-                <strong>Total: @order.Total.ToString("C")</strong>
-            </div>
-        </div>
-    }
+        }
+    </div>
 }
 
 @code {
     private IReadOnlyList<OrderDto>? _orders;
+    private string _filter = string.Empty;
+    private bool _loading = true;
+    private bool _hasError;
+    private bool _focusFilterAfterRender;
+    private ElementReference _filterInput;
+    private CancellationTokenSource? _loadCts;
 
-    protected override async Task OnInitializedAsync() => await Load();
+    private string FilterText => _filter.Trim();
+
+    private bool HasFilter => FilterText.Length > 0;
+
+    private IReadOnlyList<OrderDto> FilteredOrders =>
+        _orders is null
+            ? []
+            : HasFilter
+                ? _orders.Where(o => o.Customer.Contains(FilterText, StringComparison.OrdinalIgnoreCase)).ToList()
+                : _orders;
+
+    private string StatusText
+    {
+        get
+        {
+            var total = _orders?.Count ?? 0;
+            if (!HasFilter)
+            {
+                return total == 1 ? "1 order" : $"{total} orders";
+            }
+
+            return $"Showing {FilteredOrders.Count} of {total} {(total == 1 ? "order" : "orders")} for “{FilterText}”";
+        }
+    }
+
+    // Prerendering stays on, but the request is not sent while prerendering:
+    // the first HTML never depends on Ordering being reachable.
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Load();
+            return;
+        }
+
+        if (_focusFilterAfterRender)
+        {
+            _focusFilterAfterRender = false;
+            await _filterInput.FocusAsync();
+        }
+    }
 
     private async Task Load()
     {
-        _orders = null;
-        _orders = await Ordering.GetOrdersAsync();
+        _loadCts?.Cancel();
+        using var cts = new CancellationTokenSource();
+        _loadCts = cts;
+
+        _loading = true;
+        _hasError = false;
+        StateHasChanged();
+
+        try
+        {
+            var orders = await Ordering.GetOrdersAsync(cts.Token);
+            if (cts.IsCancellationRequested)
+            {
+                return; // A newer request (or disposal) superseded this one.
+            }
+
+            _orders = orders;
+        }
+        catch (OperationCanceledException) when (cts.IsCancellationRequested)
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            if (cts.IsCancellationRequested)
+            {
+                return;
+            }
+
+            Logger.LogError(ex, "Failed to load orders from the Ordering service.");
+            _hasError = true;
+        }
+        finally
+        {
+            if (ReferenceEquals(_loadCts, cts))
+            {
+                _loadCts = null;
+            }
+        }
+
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void OnFilterKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            _filter = string.Empty;
+        }
+    }
+
+    private void ClearFilter()
+    {
+        _filter = string.Empty;
+        _focusFilterAfterRender = true;
+    }
+
+    public void Dispose()
+    {
+        _loadCts?.Cancel();
+        _loadCts = null;
     }
 }

@@ -2,39 +2,53 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-bg);
 }
 
 main {
     flex: 1;
+    min-width: 0;
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-color: var(--color-sidebar-bg);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
     justify-content: flex-end;
-    height: 3.5rem;
+    height: var(--top-row-height);
     display: flex;
     align-items: center;
 }
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
-        margin-left: 1.5rem;
+        margin-left: var(--space-5);
         text-decoration: none;
+        color: var(--color-link);
+        border-radius: var(--radius-sm);
     }
 
     .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
         text-decoration: underline;
+        color: var(--color-link-hover);
     }
 
     .top-row ::deep a:first-child {
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+/* Centred reading column. */
+.content {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin-inline: auto;
+}
 
 @media (max-width: 640.98px) {
     .top-row {
@@ -52,10 +66,13 @@ main {
     }
 
     .sidebar {
-        width: 250px;
+        width: var(--sidebar-width);
+        flex-shrink: 0;
         height: 100vh;
         position: sticky;
         top: 0;
+        border-bottom: none;
+        border-right: 1px solid var(--color-border);
     }
 
     .top-row {
@@ -71,16 +88,16 @@ main {
     }
 
     .top-row, article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: var(--space-6) !important;
+        padding-right: var(--space-5) !important;
     }
 }
 
 #blazor-error-ui {
-    color-scheme: light only;
-    background: lightyellow;
+    background: var(--color-error-ui-bg);
+    color: var(--color-error-ui-text);
     bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-bar);
     box-sizing: border-box;
     display: none;
     left: 0;

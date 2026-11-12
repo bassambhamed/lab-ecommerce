@@ -12,10 +12,11 @@ exactly like an external caller, never directly to Catalog or Ordering.
 |---|---|
 | `Services/CatalogApiClient.cs` | Typed client → `/catalog/...` via the gateway. `ProductDto`. |
 | `Services/OrderingApiClient.cs` | Typed client → `/ordering/...` via the gateway. Order DTOs. |
-| `Components/Pages/Home.razor` | Landing page with links to Catalog and Orders. |
-| `Components/Pages/Products.razor` | Catalog list + in-memory cart + place-order form. |
-| `Components/Pages/Orders.razor` | Order history with a refresh button. |
-| `Components/Layout/NavMenu.razor` | Navigation: Catalog / Orders. |
+| `Components/Pages/Home.razor` | Landing page with links to Catalog and Orders, as a responsive card grid (`Home.razor.css`). |
+| `Components/Pages/Products.razor` | Catalog as a responsive grid of product cards (Product / Description / Price / Stock + Add) + in-memory cart + place-order form. Isolated styles in `Products.razor.css`. |
+| `Components/Pages/Orders.razor` | Order history: client-side "Filter by customer" (case-insensitive, live count in a `status` region, Escape / "Clear filter"), Refresh that cancels the previous request, loading and error states; orders load after the first render so prerendering never waits on Ordering. Order cards in a responsive grid with semantic status badges. Isolated styles in `Orders.razor.css`. |
+| `Components/Layout/NavMenu.razor` | Navigation: Catalog / Orders. Sober token-based sidebar, active link with accent bar, icons as `currentColor` masks. |
+| `wwwroot/app.css` | Design tokens (`--color-*`, `--radius-*`, `--shadow-*`, `--space-*`, type, motion) on `:root`, redefined under `prefers-color-scheme: dark`; Bootstrap variables mapped onto them; shared `.card-grid`, `.status-badge`, focus ring, reduced-motion rule. |
 | `Program.cs` | Registers the two typed clients pointing at `https+http://gateway`. |
 
 ## Pages / flow
