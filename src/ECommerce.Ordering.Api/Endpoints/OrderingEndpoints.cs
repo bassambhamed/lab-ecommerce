@@ -68,8 +68,8 @@ public static class OrderingEndpoints
         return group;
     }
 
-    // Must stay in sync with the Customer column length in OrderingDbContext
-    // (not enforced by the in-memory provider).
+    // Must stay in sync with the Customer column length in OrderingDbContext:
+    // PostgreSQL enforces it, so a longer value would otherwise fail on SaveChanges with a 500.
     private const int CustomerMaxLength = 200;
 
     /// <summary>

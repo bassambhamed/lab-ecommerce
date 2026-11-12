@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "postgres-catalog": {
+      "command": "bash",
+      "args": [
+        ".claude/mcp/postgres-lecture.sh",
+        "catalogdb"
+      ]
+    },
+    "postgres-ordering": {
+      "command": "bash",
+      "args": [
+        ".claude/mcp/postgres-lecture.sh",
+        "orderingdb"
+      ]
+    }
+  }
+}

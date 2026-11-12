@@ -9,8 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.Services.AddOpenApi();
+// "orderingdb" is the Aspire database resource; the AppHost injects ConnectionStrings__orderingdb.
+// Plain AddDbContext + Enrich (instead of AddNpgsqlDbContext, which pools contexts) keeps
+// the registration overridable and still adds Aspire's tracing, health check and retries.
 builder.Services.AddDbContext<OrderingDbContext>(options =>
-    options.UseInMemoryDatabase("ordering"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("orderingdb")));
+builder.EnrichNpgsqlDbContext<OrderingDbContext>();
 
 // Serialize enums (e.g. OrderStatus) as strings rather than integers.
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -36,7 +40,7 @@ app.MapOrderingEndpoints();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<OrderingDbContext>();
-    db.Database.EnsureCreated();
+    db.Database.Migrate();
 }
 
 app.Run();
