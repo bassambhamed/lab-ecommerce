@@ -1,0 +1,27 @@
+# Dockerfile modèle du lab 7, à copier dans src/<Projet>/Dockerfile.
+# Tel quel, il construit Catalog et fonctionne : c'est l'image « avant ».
+# Construire depuis la racine de la copie (le contexte doit contenir ServiceDefaults) :
+#   docker build -f src/ECommerce.Catalog.Api/Dockerfile -t ecommerce/catalog:avant .
+#
+# À compléter (retirez chaque TODO une fois traité ; les commentaires finaux sont en anglais) :
+#   TODO 1  Images de base : version exacte ET digest (tag@sha256:...), vérifiés dans le registre.
+#   TODO 2  Cache : copier les .csproj et lancer dotnet restore AVANT de copier le code.
+#   TODO 3  Image d'exécution chiseled (ni shell ni gestionnaire de paquets).
+#   TODO 4  Utilisateur non root, numérique : celui que fournit l'image ($APP_UID).
+#   TODO 5  Un .dockerignore à la racine : ni bin/, ni obj/, ni .git/, ni secrets.
+# Pour un autre service, remplacez ECommerce.Catalog.Api par le nom du projet.
+
+# TODO 1
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+# TODO 2 : tout le dépôt est copié, donc la moindre modification invalide le restore.
+COPY . .
+RUN dotnet publish src/ECommerce.Catalog.Api -c Release -o /app
+
+# TODO 1 et TODO 3 : image complète (Ubuntu, shell, apt), exécutée en root par défaut.
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
+WORKDIR /app
+COPY --from=build /app .
+# TODO 4
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "ECommerce.Catalog.Api.dll"]

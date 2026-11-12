@@ -1,0 +1,56 @@
+# docker-compose.yml modèle du lab 7, à copier à la racine de la copie et à compléter.
+# Hors de l'AppHost, personne n'injecte la découverte de services ni les chaînes de connexion :
+# c'est le rôle de ce fichier. Retirez chaque TODO une fois traité.
+#
+#   export POSTGRES_PASSWORD=...        # jamais dans Git ; un fichier .env (ignoré par Git) convient
+#   docker compose up -d --build
+#   PASSERELLE=http://localhost:5067 bash .claude/skills/smoke-test/smoke.sh
+name: ecommerce
+
+services:
+  postgres:
+    # TODO A  Version exacte de PostgreSQL (celle des tests du lab 4 est postgres:17), et son digest.
+    image: postgres
+    environment:
+      # Le mot de passe vient de l'environnement de la commande, jamais d'une valeur écrite ici.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD (environment variable or .env file)}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # TODO B  Un healthcheck : les services .NET ne doivent démarrer qu'une fois PostgreSQL prêt.
+
+  catalog:
+    image: ${REGISTRE:-ecommerce}/catalog:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Catalog.Api/Dockerfile
+    # TODO C  La chaîne de connexion que lit builder.AddNpgsqlDbContext<CatalogDbContext>("catalogdb").
+    # TODO D  Démarrer après PostgreSQL prêt.
+
+  ordering:
+    image: ${REGISTRE:-ecommerce}/ordering:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Ordering.Api/Dockerfile
+    # TODO C  La chaîne de connexion de "orderingdb".
+    # TODO E  La découverte de services : Ordering appelle https+http://catalog.
+
+  gateway:
+    image: ${REGISTRE:-ecommerce}/gateway:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Gateway/Dockerfile
+    # TODO E  Les destinations YARP https+http://catalog et https+http://ordering.
+    ports:
+      - "5067:8080"
+
+  web:
+    image: ${REGISTRE:-ecommerce}/web:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Web/Dockerfile
+    # TODO E  Le Web appelle https+http://gateway.
+    ports:
+      - "5190:8080"
+
+volumes:
+  pgdata:
