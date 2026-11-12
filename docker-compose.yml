@@ -1,0 +1,60 @@
+# Runs the whole application without the Aspire AppHost.
+# The AppHost normally injects service discovery; here the services__<name>__http__0
+# variables play that role (read by AddServiceDiscovery() in ServiceDefaults).
+# The services use EF Core InMemory, so there is no database container and no secret.
+#
+#   docker compose up -d --build
+#   open http://localhost:5190            # Web (Blazor)
+#   curl http://localhost:5067/catalog/api/products   # through the gateway
+#   docker compose down
+name: ecommerce
+
+services:
+  catalog:
+    image: ${REGISTRE:-ecommerce}/catalog:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Catalog.Api/Dockerfile
+    restart: unless-stopped
+
+  ordering:
+    image: ${REGISTRE:-ecommerce}/ordering:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Ordering.Api/Dockerfile
+    environment:
+      # Ordering calls https+http://catalog.
+      services__catalog__http__0: http://catalog:8080
+    depends_on:
+      - catalog
+    restart: unless-stopped
+
+  gateway:
+    image: ${REGISTRE:-ecommerce}/gateway:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Gateway/Dockerfile
+    environment:
+      # YARP destinations: https+http://catalog and https+http://ordering.
+      services__catalog__http__0: http://catalog:8080
+      services__ordering__http__0: http://ordering:8080
+    depends_on:
+      - catalog
+      - ordering
+    ports:
+      - "5067:8080"
+    restart: unless-stopped
+
+  web:
+    image: ${REGISTRE:-ecommerce}/web:${VERSION:-1.0}
+    build:
+      context: .
+      dockerfile: src/ECommerce.Web/Dockerfile
+    environment:
+      # The Web calls https+http://gateway, never Catalog or Ordering directly.
+      services__gateway__http__0: http://gateway:8080
+    depends_on:
+      - gateway
+    ports:
+      - "5190:8080"
+    restart: unless-stopped

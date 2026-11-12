@@ -1,0 +1,1235 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.71.2"
+  },
+  "ReportID": "01a1cf79-5b2d-77e3-8ee3-41873bc2e792",
+  "CreatedAt": "2026-11-12T12:16:39.341518+01:00",
+  "ArtifactID": "sha256:8ea73763fddf4f6990ee3f91f262b7ceaea8278a167b48723838d8aa86b044f6",
+  "ArtifactName": "ecommerce/ordering:1.0",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 137480704,
+    "OS": {
+      "Family": "ubuntu",
+      "Name": "24.04"
+    },
+    "ImageID": "sha256:92d1f7d5f7c63f3eb545afeeab9fd6177eb71fe623908b8539892bd60b3ec5fe",
+    "DiffIDs": [
+      "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea",
+      "sha256:3ed12e033f1e6d29b230a96dafe965b1c7c73b550047bf9ef3c05841838cf361",
+      "sha256:5e52c26ef56af03fd176a84ca046bfb4e4c4e9778c07a88ffdb888236c09ceb5",
+      "sha256:993ecc64799b2f605ada457826623baee36fd105b3abdff7e0b2c4d1fe523d74",
+      "sha256:d3da7550cad6e710339ffa48cffc40c72034345e08b08e622c412a140a85e37e",
+      "sha256:69a311b0466159e204bd59066211a3f3e90f2932e505baf27f5f276bbfa61a99",
+      "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+    ],
+    "RepoTags": [
+      "ecommerce/ordering:1.0"
+    ],
+    "RepoDigests": [
+      "ecommerce/ordering@sha256:92d1f7d5f7c63f3eb545afeeab9fd6177eb71fe623908b8539892bd60b3ec5fe"
+    ],
+    "Reference": "ecommerce/ordering:1.0",
+    "ImageConfig": {
+      "architecture": "arm64",
+      "created": "2026-11-12T11:01:29.49436634Z",
+      "history": [
+        {
+          "created": "2026-11-10T15:58:10Z",
+          "created_by": "COPY /rootfs / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-10T15:58:11Z",
+          "created_by": "ENV APP_UID=1654 ASPNETCORE_HTTP_PORTS=8080 DOTNET_RUNNING_IN_CONTAINER=true DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-10T15:58:11Z",
+          "created_by": "COPY /rootfs/home/app /home/app # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-10T15:58:11Z",
+          "created_by": "USER 1654",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-10T15:58:58Z",
+          "created_by": "ENV DOTNET_VERSION=10.0.15",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-10T15:58:58Z",
+          "created_by": "COPY /usr/share/dotnet /usr/share/dotnet # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-10T15:58:59Z",
+          "created_by": "COPY /dotnet-symlink /usr/bin # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-10T15:58:59Z",
+          "created_by": "ENTRYPOINT [\"/usr/bin/dotnet\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-10T15:58:59Z",
+          "created_by": "CMD [\"--info\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-10T15:59:08Z",
+          "created_by": "ENV ASPNET_VERSION=10.0.15",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-10T15:59:08Z",
+          "created_by": "COPY /dotnet /usr/share/dotnet # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-12T10:59:46Z",
+          "created_by": "WORKDIR /app",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-12T11:01:29Z",
+          "created_by": "COPY /app . # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-12T11:01:29Z",
+          "created_by": "USER 1654",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-12T11:01:29Z",
+          "created_by": "EXPOSE [8080/tcp]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-12T11:01:29Z",
+          "created_by": "ENTRYPOINT [\"dotnet\" \"ECommerce.Ordering.Api.dll\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea",
+          "sha256:3ed12e033f1e6d29b230a96dafe965b1c7c73b550047bf9ef3c05841838cf361",
+          "sha256:5e52c26ef56af03fd176a84ca046bfb4e4c4e9778c07a88ffdb888236c09ceb5",
+          "sha256:993ecc64799b2f605ada457826623baee36fd105b3abdff7e0b2c4d1fe523d74",
+          "sha256:d3da7550cad6e710339ffa48cffc40c72034345e08b08e622c412a140a85e37e",
+          "sha256:69a311b0466159e204bd59066211a3f3e90f2932e505baf27f5f276bbfa61a99",
+          "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+        ]
+      },
+      "config": {
+        "Entrypoint": [
+          "dotnet",
+          "ECommerce.Ordering.Api.dll"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "APP_UID=1654",
+          "ASPNETCORE_HTTP_PORTS=8080",
+          "DOTNET_RUNNING_IN_CONTAINER=true",
+          "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true",
+          "DOTNET_VERSION=10.0.15",
+          "ASPNET_VERSION=10.0.15"
+        ],
+        "Labels": {
+          "com.docker.compose.project": "ecommerce",
+          "com.docker.compose.service": "ordering",
+          "com.docker.compose.version": "5.5.1"
+        },
+        "User": "1654",
+        "WorkingDir": "/app",
+        "ExposedPorts": {
+          "8080/tcp": {}
+        },
+        "ArgsEscaped": true
+      }
+    },
+    "Layers": [
+      {
+        "Size": 12614656,
+        "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+        "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+      },
+      {
+        "Size": 2048,
+        "Digest": "sha256:ec0a7e0c5d0d7c4213315f9459a7dc511ae8643d5866964b1c0a52f9aebd2eac",
+        "DiffID": "sha256:3ed12e033f1e6d29b230a96dafe965b1c7c73b550047bf9ef3c05841838cf361"
+      },
+      {
+        "Size": 88972800,
+        "Digest": "sha256:c2c40accc39bef92903a4e04e435724aaf4b5f05c537c89ec9ba2e44851511f3",
+        "DiffID": "sha256:5e52c26ef56af03fd176a84ca046bfb4e4c4e9778c07a88ffdb888236c09ceb5"
+      },
+      {
+        "Size": 2560,
+        "Digest": "sha256:8caa86df1711cfc3e1195e81c3a5310c9de2a591e82f95b3ae0af3e0a5aed8c3",
+        "DiffID": "sha256:993ecc64799b2f605ada457826623baee36fd105b3abdff7e0b2c4d1fe523d74"
+      },
+      {
+        "Size": 30203392,
+        "Digest": "sha256:d841bd57a23c4e2f385a6d13fb29df4c65c83838c3e11ec4c6b99948d7bd7816",
+        "DiffID": "sha256:d3da7550cad6e710339ffa48cffc40c72034345e08b08e622c412a140a85e37e"
+      },
+      {
+        "Size": 1536,
+        "Digest": "sha256:7350b8dace158a8b5317220c8fddfc91783f598a26f771d0f23851a668c1152d",
+        "DiffID": "sha256:69a311b0466159e204bd59066211a3f3e90f2932e505baf27f5f276bbfa61a99"
+      },
+      {
+        "Size": 5683712,
+        "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+        "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "ecommerce/ordering:1.0 (ubuntu 24.04)",
+      "Class": "os-pkgs",
+      "Type": "ubuntu",
+      "Packages": [
+        {
+          "ID": "base-files@13ubuntu10.5",
+          "Name": "base-files",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/base-files@13ubuntu10.5?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "539e9a9d90c06a69"
+          },
+          "Version": "13ubuntu10.5",
+          "Arch": "arm64",
+          "SrcName": "base-files",
+          "SrcVersion": "13ubuntu10.5",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Ubuntu Developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "libc6@2.39-0ubuntu8.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "ca-certificates@20260816ubuntu0.24.04.2",
+          "Name": "ca-certificates",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/ca-certificates@20260816ubuntu0.24.04.2?arch=all\u0026distro=ubuntu-24.04",
+            "UID": "5994566dd7c05c84"
+          },
+          "Version": "20260816ubuntu0.24.04.2",
+          "Arch": "all",
+          "SrcName": "ca-certificates",
+          "SrcVersion": "20260816ubuntu0.24.04.2",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "GPL-2.0-only",
+            "MPL-2.0"
+          ],
+          "Maintainer": "Ubuntu Developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "openssl@3.0.13-0ubuntu3.16"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "gcc-14-base@14.2.0-4ubuntu2~24.04.1",
+          "Name": "gcc-14-base",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/gcc-14-base@14.2.0-4ubuntu2~24.04.1?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "37aa307e5f5d76e4"
+          },
+          "Version": "14.2.0",
+          "Release": "4ubuntu2~24.04.1",
+          "Arch": "arm64",
+          "SrcName": "gcc-14",
+          "SrcVersion": "14.2.0",
+          "SrcRelease": "4ubuntu2~24.04.1",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "GPL-3.0-only",
+            "GFDL-1.2-only",
+            "Artistic-2.0",
+            "LGPL-2.0-or-later"
+          ],
+          "Maintainer": "Ubuntu Core developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "libc6@2.39-0ubuntu8.9",
+          "Name": "libc6",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/libc6@2.39-0ubuntu8.9?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "e11586c187311a38"
+          },
+          "Version": "2.39",
+          "Release": "0ubuntu8.9",
+          "Arch": "arm64",
+          "SrcName": "glibc",
+          "SrcVersion": "2.39",
+          "SrcRelease": "0ubuntu8.9",
+          "Licenses": [
+            "LGPL-2.1-only",
+            "GPL-2.0-only",
+            "GFDL-1.3-only"
+          ],
+          "Maintainer": "Ubuntu Developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "libgcc-s1@14.2.0-4ubuntu2~24.04.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "libgcc-s1@14.2.0-4ubuntu2~24.04.1",
+          "Name": "libgcc-s1",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/libgcc-s1@14.2.0-4ubuntu2~24.04.1?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "f4efea70f0222f1f"
+          },
+          "Version": "14.2.0",
+          "Release": "4ubuntu2~24.04.1",
+          "Arch": "arm64",
+          "SrcName": "gcc-14",
+          "SrcVersion": "14.2.0",
+          "SrcRelease": "4ubuntu2~24.04.1",
+          "Maintainer": "Ubuntu Core developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "gcc-14-base@14.2.0-4ubuntu2~24.04.1",
+            "libc6@2.39-0ubuntu8.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "libssl3t64@3.0.13-0ubuntu3.16",
+          "Name": "libssl3t64",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/libssl3t64@3.0.13-0ubuntu3.16?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "fd7ec0b4b6b09d0a"
+          },
+          "Version": "3.0.13",
+          "Release": "0ubuntu3.16",
+          "Arch": "arm64",
+          "SrcName": "openssl",
+          "SrcVersion": "3.0.13",
+          "SrcRelease": "0ubuntu3.16",
+          "Licenses": [
+            "Apache-2.0",
+            "Artistic-2.0",
+            "GPL-1.0-or-later",
+            "GPL-1.0-only"
+          ],
+          "Maintainer": "Ubuntu Developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "libc6@2.39-0ubuntu8.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "libstdc++6@14.2.0-4ubuntu2~24.04.1",
+          "Name": "libstdc++6",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/libstdc%2B%2B6@14.2.0-4ubuntu2~24.04.1?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "25434ddddaa00a16"
+          },
+          "Version": "14.2.0",
+          "Release": "4ubuntu2~24.04.1",
+          "Arch": "arm64",
+          "SrcName": "gcc-14",
+          "SrcVersion": "14.2.0",
+          "SrcRelease": "4ubuntu2~24.04.1",
+          "Maintainer": "Ubuntu Core developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "gcc-14-base@14.2.0-4ubuntu2~24.04.1",
+            "libc6@2.39-0ubuntu8.9",
+            "libgcc-s1@14.2.0-4ubuntu2~24.04.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "openssl@3.0.13-0ubuntu3.16",
+          "Name": "openssl",
+          "Identifier": {
+            "PURL": "pkg:deb/ubuntu/openssl@3.0.13-0ubuntu3.16?arch=arm64\u0026distro=ubuntu-24.04",
+            "UID": "902efb54268dbfe6"
+          },
+          "Version": "3.0.13",
+          "Release": "0ubuntu3.16",
+          "Arch": "arm64",
+          "SrcName": "openssl",
+          "SrcVersion": "3.0.13",
+          "SrcRelease": "0ubuntu3.16",
+          "Maintainer": "Ubuntu Developers \u003cubuntu-devel-discuss@lists.ubuntu.com\u003e",
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "libc6@2.39-0ubuntu8.9",
+            "libssl3t64@3.0.13-0ubuntu3.16"
+          ],
+          "Layer": {
+            "Digest": "sha256:c28a9010591263b553a3c00c7c9ed5e4f2c50c933dfbad610bd10d9eae035b00",
+            "DiffID": "sha256:24c2df3f3f2caf6e70085257859eb77f522669d2c8b627679222a371747c6aea"
+          },
+          "AnalyzedBy": "dpkg"
+        }
+      ]
+    },
+    {
+      "Target": "app/ECommerce.Ordering.Api.deps.json",
+      "Class": "lang-pkgs",
+      "Type": "dotnet-core",
+      "Packages": [
+        {
+          "ID": "ECommerce.Ordering.Api/1.0.0",
+          "Name": "ECommerce.Ordering.Api",
+          "Identifier": {
+            "PURL": "pkg:nuget/ECommerce.Ordering.Api@1.0.0",
+            "UID": "9eb4275c7a1be22e"
+          },
+          "Version": "1.0.0",
+          "Relationship": "root",
+          "DependsOn": [
+            "Microsoft.AspNetCore.OpenApi/10.0.9",
+            "Microsoft.EntityFrameworkCore.InMemory/10.0.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 315,
+              "EndLine": 319
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.AspNetCore.OpenApi/10.0.9",
+          "Name": "Microsoft.AspNetCore.OpenApi",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.AspNetCore.OpenApi@10.0.9",
+            "UID": "656dc432613de8dd"
+          },
+          "Version": "10.0.9",
+          "Relationship": "direct",
+          "DependsOn": [
+            "Microsoft.OpenApi/2.0.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 320,
+              "EndLine": 326
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.EntityFrameworkCore.InMemory/10.0.9",
+          "Name": "Microsoft.EntityFrameworkCore.InMemory",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.EntityFrameworkCore.InMemory@10.0.9",
+            "UID": "db32636c94a79ed6"
+          },
+          "Version": "10.0.9",
+          "Relationship": "direct",
+          "DependsOn": [
+            "Microsoft.EntityFrameworkCore/10.0.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 341,
+              "EndLine": 347
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.EntityFrameworkCore/10.0.9",
+          "Name": "Microsoft.EntityFrameworkCore",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.EntityFrameworkCore@10.0.9",
+            "UID": "b18744e45b547765"
+          },
+          "Version": "10.0.9",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Microsoft.EntityFrameworkCore.Abstractions/10.0.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 327,
+              "EndLine": 333
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.EntityFrameworkCore.Abstractions/10.0.9",
+          "Name": "Microsoft.EntityFrameworkCore.Abstractions",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.EntityFrameworkCore.Abstractions@10.0.9",
+            "UID": "90a299797bc455e9"
+          },
+          "Version": "10.0.9",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 334,
+              "EndLine": 340
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.AmbientMetadata.Application/10.6.0",
+          "Name": "Microsoft.Extensions.AmbientMetadata.Application",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.AmbientMetadata.Application@10.6.0",
+            "UID": "f4f490e0805dcc7c"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 348,
+              "EndLine": 354
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Compliance.Abstractions/10.6.0",
+          "Name": "Microsoft.Extensions.Compliance.Abstractions",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Compliance.Abstractions@10.6.0",
+            "UID": "3328105ceed255b3"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 355,
+              "EndLine": 361
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.DependencyInjection.AutoActivation/10.6.0",
+          "Name": "Microsoft.Extensions.DependencyInjection.AutoActivation",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.DependencyInjection.AutoActivation@10.6.0",
+            "UID": "ca4344a6eb2cf9f5"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 362,
+              "EndLine": 368
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Diagnostics.ExceptionSummarization/10.6.0",
+          "Name": "Microsoft.Extensions.Diagnostics.ExceptionSummarization",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Diagnostics.ExceptionSummarization@10.6.0",
+            "UID": "bba57418c7d053c6"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 369,
+              "EndLine": 375
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Http.Diagnostics/10.6.0",
+          "Name": "Microsoft.Extensions.Http.Diagnostics",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Http.Diagnostics@10.6.0",
+            "UID": "fb211006a38b23cf"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Microsoft.Extensions.Telemetry/10.6.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 376,
+              "EndLine": 382
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Http.Resilience/10.6.0",
+          "Name": "Microsoft.Extensions.Http.Resilience",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Http.Resilience@10.6.0",
+            "UID": "4de86c10d5e7ed13"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Microsoft.Extensions.Http.Diagnostics/10.6.0",
+            "Microsoft.Extensions.Resilience/10.6.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 383,
+              "EndLine": 389
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Resilience/10.6.0",
+          "Name": "Microsoft.Extensions.Resilience",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Resilience@10.6.0",
+            "UID": "bc4b135c6e36bb37"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Polly.RateLimiting/8.4.2",
+            "Microsoft.Extensions.Diagnostics.ExceptionSummarization/10.6.0",
+            "Microsoft.Extensions.Telemetry.Abstractions/10.6.0",
+            "Polly.Extensions/8.4.2"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 390,
+              "EndLine": 396
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.ServiceDiscovery/10.6.0",
+          "Name": "Microsoft.Extensions.ServiceDiscovery",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.ServiceDiscovery@10.6.0",
+            "UID": "263b2e262b12247d"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Microsoft.Extensions.ServiceDiscovery.Abstractions/10.6.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 397,
+              "EndLine": 403
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.ServiceDiscovery.Abstractions/10.6.0",
+          "Name": "Microsoft.Extensions.ServiceDiscovery.Abstractions",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.ServiceDiscovery.Abstractions@10.6.0",
+            "UID": "60ad54c4c9bc3637"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 404,
+              "EndLine": 410
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Telemetry/10.6.0",
+          "Name": "Microsoft.Extensions.Telemetry",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Telemetry@10.6.0",
+            "UID": "827110df47a210e2"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Microsoft.Extensions.AmbientMetadata.Application/10.6.0",
+            "Microsoft.Extensions.DependencyInjection.AutoActivation/10.6.0",
+            "Microsoft.Extensions.Telemetry.Abstractions/10.6.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 411,
+              "EndLine": 417
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.Extensions.Telemetry.Abstractions/10.6.0",
+          "Name": "Microsoft.Extensions.Telemetry.Abstractions",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.Extensions.Telemetry.Abstractions@10.6.0",
+            "UID": "92aaf8acc12c6b40"
+          },
+          "Version": "10.6.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Microsoft.Extensions.Compliance.Abstractions/10.6.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 418,
+              "EndLine": 424
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Microsoft.OpenApi/2.0.0",
+          "Name": "Microsoft.OpenApi",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.OpenApi@2.0.0",
+            "UID": "f1eab6095c68b344"
+          },
+          "Version": "2.0.0",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 425,
+              "EndLine": 431
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry/1.15.3",
+          "Name": "OpenTelemetry",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry@1.15.3",
+            "UID": "b5940d9138cb5719"
+          },
+          "Version": "1.15.3",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry.Api.ProviderBuilderExtensions/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 432,
+              "EndLine": 438
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Api/1.15.3",
+          "Name": "OpenTelemetry.Api",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Api@1.15.3",
+            "UID": "8804155f86284ae7"
+          },
+          "Version": "1.15.3",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 439,
+              "EndLine": 445
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Api.ProviderBuilderExtensions/1.15.3",
+          "Name": "OpenTelemetry.Api.ProviderBuilderExtensions",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Api.ProviderBuilderExtensions@1.15.3",
+            "UID": "3bed67c3a23dbaf8"
+          },
+          "Version": "1.15.3",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry.Api/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 446,
+              "EndLine": 452
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Exporter.OpenTelemetryProtocol/1.15.3",
+          "Name": "OpenTelemetry.Exporter.OpenTelemetryProtocol",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Exporter.OpenTelemetryProtocol@1.15.3",
+            "UID": "9d75c907a41c3301"
+          },
+          "Version": "1.15.3",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 453,
+              "EndLine": 459
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Extensions.Hosting/1.15.3",
+          "Name": "OpenTelemetry.Extensions.Hosting",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Extensions.Hosting@1.15.3",
+            "UID": "1a45e3cdd329eea0"
+          },
+          "Version": "1.15.3",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 460,
+              "EndLine": 466
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Instrumentation.AspNetCore/1.15.2",
+          "Name": "OpenTelemetry.Instrumentation.AspNetCore",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Instrumentation.AspNetCore@1.15.2",
+            "UID": "3f794ccb3ca761d7"
+          },
+          "Version": "1.15.2",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry.Api.ProviderBuilderExtensions/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 467,
+              "EndLine": 473
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Instrumentation.Http/1.15.1",
+          "Name": "OpenTelemetry.Instrumentation.Http",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Instrumentation.Http@1.15.1",
+            "UID": "69aa9f890b09e77b"
+          },
+          "Version": "1.15.1",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry.Api.ProviderBuilderExtensions/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 474,
+              "EndLine": 480
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "OpenTelemetry.Instrumentation.Runtime/1.15.1",
+          "Name": "OpenTelemetry.Instrumentation.Runtime",
+          "Identifier": {
+            "PURL": "pkg:nuget/OpenTelemetry.Instrumentation.Runtime@1.15.1",
+            "UID": "6c16754424af64ec"
+          },
+          "Version": "1.15.1",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "OpenTelemetry.Api/1.15.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 481,
+              "EndLine": 487
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Polly.Core/8.4.2",
+          "Name": "Polly.Core",
+          "Identifier": {
+            "PURL": "pkg:nuget/Polly.Core@8.4.2",
+            "UID": "50d9e24dd923e5d1"
+          },
+          "Version": "8.4.2",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 488,
+              "EndLine": 494
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Polly.Extensions/8.4.2",
+          "Name": "Polly.Extensions",
+          "Identifier": {
+            "PURL": "pkg:nuget/Polly.Extensions@8.4.2",
+            "UID": "537a6b931a5a28f0"
+          },
+          "Version": "8.4.2",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Polly.Core/8.4.2"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 495,
+              "EndLine": 501
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        },
+        {
+          "ID": "Polly.RateLimiting/8.4.2",
+          "Name": "Polly.RateLimiting",
+          "Identifier": {
+            "PURL": "pkg:nuget/Polly.RateLimiting@8.4.2",
+            "UID": "7d9c3ad4dffc4e28"
+          },
+          "Version": "8.4.2",
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "Polly.Core/8.4.2"
+          ],
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "Locations": [
+            {
+              "StartLine": 502,
+              "EndLine": 508
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        }
+      ],
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-49451",
+          "VendorIDs": [
+            "GHSA-v5pm-xwqc-g5wc"
+          ],
+          "PkgID": "Microsoft.OpenApi/2.0.0",
+          "PkgName": "Microsoft.OpenApi",
+          "PkgIdentifier": {
+            "PURL": "pkg:nuget/Microsoft.OpenApi@2.0.0",
+            "UID": "f1eab6095c68b344"
+          },
+          "InstalledVersion": "2.0.0",
+          "FixedVersion": "2.7.5, 3.5.4",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:57c8d53876e5434d75363161839d461ef3bfc20c8edd72de14c48ac4ec98414c",
+            "DiffID": "sha256:47fd54f4cb37356c0bcfb4916050a1f633de7ce874903d3830e56282a67d2711"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-49451",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory NuGet",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anuget"
+          },
+          "Fingerprint": "sha256:b4a14c23b54d60d0bc66db38b4e6a669c32b127c982f58b06759cdbde13b89d9",
+          "Title": "Microsoft.OpenAPI: Circular schema references may terminate OpenAPI parsing",
+          "Description": "The OpenAPI.NET SDK contains a useful object model for OpenAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model. From 2.0.0-preview11 until 2.7.5 and 3.5.4, a small OpenAPI document containing a circular schema reference can cause process termination through stack overflow in Microsoft.OpenApi. The issue affects OpenAPI document parsing through public OpenAPI.NET reader APIs and has been confirmed across both JSON and YAML reader paths. This vulnerability is fixed in 2.7.5 and 3.5.4.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-674"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://github.com/microsoft/OpenAPI.NET",
+            "https://github.com/microsoft/OpenAPI.NET/security/advisories/GHSA-v5pm-xwqc-g5wc",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-49451"
+          ],
+          "PublishedDate": "2026-06-30T17:16:22.39Z",
+          "LastModifiedDate": "2026-10-25T21:10:00.77Z"
+        }
+      ]
+    },
+    {
+      "Target": "usr/share/dotnet/shared/Microsoft.AspNetCore.App/10.0.15/Microsoft.AspNetCore.App.deps.json",
+      "Class": "lang-pkgs",
+      "Type": "dotnet-core",
+      "Packages": [
+        {
+          "ID": "Microsoft.AspNetCore.App.Runtime.linux-arm64/10.0.15",
+          "Name": "Microsoft.AspNetCore.App.Runtime.linux-arm64",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.AspNetCore.App.Runtime.linux-arm64@10.0.15",
+            "UID": "400299e86a8b2894"
+          },
+          "Version": "10.0.15",
+          "Layer": {
+            "Digest": "sha256:d841bd57a23c4e2f385a6d13fb29df4c65c83838c3e11ec4c6b99948d7bd7816",
+            "DiffID": "sha256:d3da7550cad6e710339ffa48cffc40c72034345e08b08e622c412a140a85e37e"
+          },
+          "Locations": [
+            {
+              "StartLine": 581,
+              "EndLine": 586
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        }
+      ]
+    },
+    {
+      "Target": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.15/Microsoft.NETCore.App.deps.json",
+      "Class": "lang-pkgs",
+      "Type": "dotnet-core",
+      "Packages": [
+        {
+          "ID": "Microsoft.NETCore.App.Runtime.linux-arm64/10.0.15",
+          "Name": "Microsoft.NETCore.App.Runtime.linux-arm64",
+          "Identifier": {
+            "PURL": "pkg:nuget/Microsoft.NETCore.App.Runtime.linux-arm64@10.0.15",
+            "UID": "1cf73696f617f98"
+          },
+          "Version": "10.0.15",
+          "Layer": {
+            "Digest": "sha256:c2c40accc39bef92903a4e04e435724aaf4b5f05c537c89ec9ba2e44851511f3",
+            "DiffID": "sha256:5e52c26ef56af03fd176a84ca046bfb4e4c4e9778c07a88ffdb888236c09ceb5"
+          },
+          "Locations": [
+            {
+              "StartLine": 749,
+              "EndLine": 754
+            }
+          ],
+          "AnalyzedBy": "dotnet-core"
+        }
+      ]
+    }
+  ]
+}

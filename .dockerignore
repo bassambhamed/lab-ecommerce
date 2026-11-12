@@ -1,0 +1,36 @@
+# Keep the build context small and free of secrets.
+
+# Build output (rebuilt inside the image)
+**/bin/
+**/obj/
+
+# VCS and IDE
+.git/
+.gitignore
+.vs/
+.vscode/
+.idea/
+.DS_Store
+**/.DS_Store
+
+# Secrets and local configuration
+.env
+.env.*
+**/*.pfx
+**/*.pem
+**/*.key
+**/*.crt
+**/*.p12
+**/appsettings.*.local.json
+**/secrets.json
+
+# Not needed to build the services
+.claude/
+artifacts/
+preuves/
+codescene/
+tests/
+*.md
+docker-compose*.yml
+**/Dockerfile*
+.dockerignore
