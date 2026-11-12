@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - catalog.yaml
+  - ordering.yaml
+  - gateway.yaml
+  - web.yaml
+  - ingress.yaml
+# app.kubernetes.io/name is set per resource (selectors rely on it), so only the
+# shared label is added here, on metadata and pod templates but not on selectors.
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: ecommerce
+    includeSelectors: false
+    includeTemplates: true

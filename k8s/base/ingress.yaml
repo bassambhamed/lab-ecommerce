@@ -1,0 +1,34 @@
+# Single entry point (Traefik ships with k3s). Catalog and Ordering are never exposed:
+# the gateway strips /catalog and /ordering and forwards inside the cluster.
+# The Web has no page under /catalog or /ordering, so the paths do not collide.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecommerce
+  labels:
+    app.kubernetes.io/name: ecommerce
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /catalog
+            pathType: Prefix
+            backend:
+              service:
+                name: gateway
+                port:
+                  name: http
+          - path: /ordering
+            pathType: Prefix
+            backend:
+              service:
+                name: gateway
+                port:
+                  name: http
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  name: http

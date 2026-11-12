@@ -1,0 +1,9 @@
+# dev: 1 replica, ASPNETCORE_ENVIRONMENT=Development, HTTP probes, requests only (no limits).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ecommerce-dev
+resources:
+  - namespace.yaml
+  - ../../base
+patches:
+  - path: deployment-patch.yaml
